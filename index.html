@@ -677,6 +677,73 @@ footer p {
   transform: translateY(-2px);
 }
 .build-explore:hover span { transform: translateX(6px); }
+
+/* ─── MOVEMENT — floating tags ────────────────────────────── */
+#s-movement {
+  padding: 150px 48px 170px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.mv-title {
+  font-size: clamp(32px, 5vw, 62px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+.float-field {
+  margin: 64px auto 0;
+  max-width: 860px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 26px 54px;
+}
+.ftag-w {
+  display: inline-block;
+  animation: ftFloat var(--dur, 7s) ease-in-out var(--del, 0s) infinite;
+}
+.ftag {
+  display: inline-block;
+  font-size: clamp(22px, 3.4vw, 38px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+  cursor: default;
+  transition: color 0.35s ease, text-shadow 0.35s ease,
+              transform 0.45s cubic-bezier(0.23,1,0.32,1);
+}
+.ftag:hover {
+  color: var(--c, var(--purple));
+  text-shadow: 0 0 28px var(--g, rgba(124,58,237,0.4));
+  transform: scale(1.08);
+}
+.mv-tail {
+  margin-top: 72px;
+  font-size: clamp(18px, 2.4vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.mv-tail em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--green), var(--purple) 55%, var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes ftFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ftag-w { animation: none; }
+}
+@media (max-width: 580px) {
+  #s-movement { padding: 100px 24px 120px; }
+  .float-field { gap: 18px 34px; }
+}
 </style>
 </head>
 <body>
@@ -691,9 +758,9 @@ footer p {
     <li><a href="#s-core">Суть</a></li>
     <li><a href="#s-build">Проєкти</a></li>
     <li><a href="directions.html">Напрямки</a></li>
-    <li><a href="#s-enter">Увійти</a></li>
+    <li><a href="open-source.html">Open Source</a></li>
   </ul>
-  <a href="#s-enter" class="nav-cta">Увійти в орбіту</a>
+  <a href="join.html" class="nav-cta">Подати заявку</a>
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -873,11 +940,38 @@ footer p {
     Ми будуємо його<br>в русі.
   </h2>
   <div class="cta-wrap rv d2">
-    <a href="#" class="enter-btn" id="enter-btn">
+    <a href="join.html" class="enter-btn" id="enter-btn">
       <span class="btn-dot"></span>
       Увійти в орбіту
     </a>
   </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6 — MOVEMENT (floating tags)
+═══════════════════════════════════════════════════════════ -->
+<section id="s-movement" data-screen-label="06 Movement">
+  <h2 class="mv-title rv">Not everyone is looking<br>for a movement.</h2>
+
+  <div class="float-field rv d2" aria-label="build, create, experiment, think in systems, move fast">
+    <span class="ftag-w" style="--dur:6.4s">
+      <span class="ftag" style="--c:#00FF87; --g:rgba(0,255,135,0.45)">build</span>
+    </span>
+    <span class="ftag-w" style="--dur:7.6s; --del:0.6s">
+      <span class="ftag" style="--c:#FF2D55; --g:rgba(255,45,85,0.4)">create</span>
+    </span>
+    <span class="ftag-w" style="--dur:6.9s; --del:1.2s">
+      <span class="ftag" style="--c:#20D4C4; --g:rgba(32,212,196,0.45)">experiment</span>
+    </span>
+    <span class="ftag-w" style="--dur:8.2s; --del:0.3s">
+      <span class="ftag" style="--c:#7C3AED; --g:rgba(124,58,237,0.45)">think in systems</span>
+    </span>
+    <span class="ftag-w" style="--dur:7.1s; --del:0.9s">
+      <span class="ftag" style="--c:#00FF87; --g:rgba(0,255,135,0.45)">move fast</span>
+    </span>
+  </div>
+
+  <p class="mv-tail rv d3">But if you do — <em>you might already be inside it.</em></p>
 </section>
 
 <!-- FOOTER -->

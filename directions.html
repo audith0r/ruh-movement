@@ -154,6 +154,9 @@
     display: inline-block;
     box-shadow: 0 4px 18px -6px rgba(124,92,255,0.5);
   }
+  .nav-group { display: flex; align-items: center; gap: 1.4rem; }
+  .nav-link { font-size: var(--step--1); font-weight: 500; color: var(--muted); transition: color 0.25s; }
+  .nav-link:hover { color: var(--ink); }
   .nav-cta {
     font-size: var(--step--1);
     font-weight: 500;
@@ -600,45 +603,8 @@
   }
 
   /* ============================================================
-     FOOTER CTA
+     FOOTER
      ============================================================ */
-  .closing { padding-block: var(--section); text-align: center; }
-  .closing__inner { max-width: 30ch; margin-inline: auto; }
-  .closing h2 {
-    font-size: var(--step-3);
-    line-height: 1.06;
-    letter-spacing: -0.025em;
-    font-weight: 650;
-  }
-  .closing__verbs {
-    margin: clamp(2.5rem,2rem+3vw,4rem) auto 0;
-    max-width: 640px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
-    gap: 1px;
-    background: var(--hairline);
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-md);
-    overflow: hidden;
-  }
-  .closing__verbs .v {
-    background: var(--bg);
-    padding: 1.4rem 1rem;
-    font-weight: 500;
-    font-size: var(--step-0);
-    letter-spacing: -0.01em;
-    transition: background 0.4s var(--ease), color 0.4s var(--ease);
-    cursor: default;
-  }
-  .closing__verbs .v:hover { background: var(--surface); color: var(--purple); }
-  .closing__tail {
-    margin-top: clamp(2.5rem,2rem+3vw,3.5rem);
-    font-size: var(--step-1);
-    color: var(--ink-2);
-    line-height: 1.4;
-  }
-  .closing__tail .grad-text { font-weight: 600; }
-
   footer.foot {
     border-top: 1px solid var(--hairline);
     padding: 2.5rem var(--gutter);
@@ -717,121 +683,6 @@
     .pos-4 { grid-column: 6 / 13; }
   }
 
-  /* ============================================================
-     FORM PRIMITIVES (shared by both forms)
-     ============================================================ */
-  .field { display: flex; flex-direction: column; gap: 0.5rem; border: 0; padding: 0; margin: 0; min-width: 0; }
-  .field label, .field legend {
-    font-size: var(--step--1);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 500;
-  }
-  .field input, .field textarea {
-    font: inherit;
-    color: var(--ink);
-    background: var(--surface);
-    border: 1px solid var(--hairline-2);
-    border-radius: 14px;
-    padding: 0.85em 1em;
-    width: 100%;
-    -webkit-appearance: none; appearance: none;
-    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
-  }
-  .field textarea { resize: vertical; min-height: 110px; }
-  .field input::placeholder, .field textarea::placeholder { color: #A7A7AD; }
-  .field input:focus, .field textarea:focus {
-    outline: none;
-    border-color: var(--purple);
-    box-shadow: 0 0 0 4px var(--purple-soft);
-  }
-  .field--full { grid-column: 1 / -1; }
-
-  /* honeypot — hidden from humans, catches bots */
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-
-  /* chips (radio cluster picker) */
-  .chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.3rem; }
-  .chip { position: relative; cursor: pointer; }
-  .chip input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
-  .chip span {
-    display: inline-block;
-    padding: 0.6em 1.1em;
-    border: 1px solid var(--hairline-2);
-    border-radius: 999px;
-    font-size: var(--step--1);
-    color: var(--ink-2);
-    transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.25s var(--ease);
-  }
-  .chip:hover span { border-color: var(--ink); transform: translateY(-1px); }
-  .chip input:checked + span {
-    border-color: transparent;
-    background: linear-gradient(100deg, var(--purple), var(--pink));
-    color: #fff;
-  }
-  .chip input:focus-visible + span { box-shadow: 0 0 0 4px var(--purple-soft); }
-
-  .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
-  .form-submit { margin-top: 0; cursor: pointer; border: 0; }
-  .form-submit[disabled] { opacity: 0.6; cursor: progress; }
-  .form-status {
-    margin: 0;
-    font-size: var(--step--1);
-    opacity: 0; transform: translateY(4px);
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .form-status.show { opacity: 1; transform: none; }
-  .form-status.ok   { color: #0FAE6B; }
-  .form-status.err  { color: #E0464B; }
-  .form-status.warn { color: #B26B00; }
-
-  /* ============================================================
-     JOIN / ОРБІТА
-     ============================================================ */
-  .join { position: relative; padding-block: var(--section); overflow: hidden; }
-  .join__bg {
-    position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background:
-      radial-gradient(60% 50% at 18% 0%, var(--green-soft), transparent 60%),
-      radial-gradient(55% 50% at 92% 28%, var(--purple-soft), transparent 60%),
-      radial-gradient(50% 55% at 60% 100%, var(--pink-soft), transparent 60%);
-    opacity: 0.85;
-  }
-  .sec-head--center { text-align: center; margin-inline: auto; align-items: center; }
-  .orbit-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.4rem;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-  @media (min-width: 620px) { .orbit-form { grid-template-columns: 1fr 1fr; } }
-
-  /* ============================================================
-     CONTRIBUTE / OPEN-SOURCE
-     ============================================================ */
-  .contrib { padding-block: var(--section); }
-  .contrib__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(2rem, 1.5rem + 3vw, 4rem);
-    align-items: start;
-  }
-  @media (min-width: 860px) { .contrib__grid { grid-template-columns: 0.9fr 1.1fr; } }
-  .gh-links { display: grid; gap: 0.8rem; }
-  .gh-btn {
-    display: flex; align-items: center; gap: 0.8em;
-    padding: 1.05em 1.3em;
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-md);
-    background: var(--surface);
-    font-weight: 500;
-    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-  }
-  .gh-btn .gh-ic { color: var(--purple); font-size: 1.05em; width: 1.2em; text-align: center; }
-  .gh-btn:hover { border-color: var(--hairline-2); transform: translateY(-2px); box-shadow: 0 20px 40px -30px rgba(10,10,11,0.5); }
-  .feedback-form { display: grid; gap: 1.2rem; }
 </style>
 </head>
 <body>
@@ -839,7 +690,10 @@
   <!-- ===================== NAV ===================== -->
   <header class="nav" id="nav">
     <a href="index.html" class="brand" title="На головну"><span class="glyph" aria-hidden="true"></span>РУХ</a>
-    <a href="#join" class="nav-cta">Стати частиною Орбіти</a>
+    <div class="nav-group">
+      <a class="nav-link" href="open-source.html">Open Source</a>
+      <a class="nav-cta" href="join.html">Подати заявку</a>
+    </div>
   </header>
 
   <main id="top">
@@ -1001,8 +855,8 @@
             Хто навчиться будувати з ШІ — обжене решту.
           </div>
 
-          <a href="#join" class="btn-build reveal" data-delay="3">
-            Стати частиною <span class="arrow">→</span>
+          <a href="join.html" class="btn-build reveal" data-delay="3">
+            Подати заявку <span class="arrow">→</span>
           </a>
         </div>
 
@@ -1023,130 +877,6 @@
       </div>
     </section>
 
-    <!-- ===================== CLOSING CTA ===================== -->
-    <section class="closing">
-      <div class="wrap">
-        <div class="closing__inner reveal">
-          <h2>Not everyone is looking for a movement.</h2>
-        </div>
-
-        <div class="closing__verbs reveal" data-delay="1">
-          <div class="v">build</div>
-          <div class="v">create</div>
-          <div class="v">experiment</div>
-          <div class="v">think in systems</div>
-          <div class="v">move fast</div>
-        </div>
-
-        <p class="closing__tail reveal" data-delay="2">
-          But if you do —<br>
-          <span class="grad-text">you might already be inside it.</span>
-        </p>
-      </div>
-    </section>
-
-    <!-- ===================== JOIN / ОРБІТА ===================== -->
-    <section class="join" id="join">
-      <div class="join__bg" aria-hidden="true"></div>
-      <div class="wrap">
-        <div class="sec-head sec-head--center reveal">
-          <span class="eyebrow"><span class="dot"></span>Орбіта · Заявка</span>
-          <h2>Стати частиною <span class="grad-text">Орбіти</span></h2>
-          <p>Не для всіх. Але якщо ти будуєш, створюєш або рухаєш культуру — залиш заявку, і ми вийдемо на зв'язок.</p>
-        </div>
-
-        <!-- Formspree: заміни YOUR_FORM_ID на свій endpoint (formspree.io) -->
-        <form class="orbit-form fs-form reveal" data-delay="1"
-              action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <!-- анти-спам honeypot (приховане поле) -->
-          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <input type="hidden" name="_subject" value="Нова заявка в Орбіту — РУХ">
-
-          <div class="field">
-            <label for="f-name">Ім'я</label>
-            <input id="f-name" name="name" type="text" required placeholder="Як до тебе звертатися">
-          </div>
-          <div class="field">
-            <label for="f-email">Пошта</label>
-            <input id="f-email" name="email" type="email" required placeholder="you@email.com">
-          </div>
-          <div class="field">
-            <label for="f-phone">Номер телефону</label>
-            <input id="f-phone" name="phone" type="tel" placeholder="+380 __ ___ __ __">
-          </div>
-          <div class="field">
-            <label for="f-social">Соцмережа</label>
-            <input id="f-social" name="social" type="text" placeholder="@instagram / telegram / посилання">
-          </div>
-
-          <fieldset class="field field--full chips-field">
-            <legend>Куди тягне — кластер</legend>
-            <div class="chips">
-              <label class="chip"><input type="radio" name="cluster" value="Tech & AI" required><span>Tech &amp; AI</span></label>
-              <label class="chip"><input type="radio" name="cluster" value="Business & Moneymaking"><span>Business &amp; Moneymaking</span></label>
-              <label class="chip"><input type="radio" name="cluster" value="Culture & Art"><span>Culture &amp; Art</span></label>
-              <label class="chip"><input type="radio" name="cluster" value="Self-Evolution"><span>Self-Evolution</span></label>
-            </div>
-          </fieldset>
-
-          <div class="field--full form-actions">
-            <button type="submit" class="btn-build form-submit">
-              Надіслати заявку <span class="arrow">→</span>
-            </button>
-            <p class="form-status" role="status" aria-live="polite"></p>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <!-- ===================== CONTRIBUTE / OPEN-SOURCE ===================== -->
-    <section class="contrib" id="contribute">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <span class="eyebrow"><span class="dot"></span>Open-source</span>
-          <h2>Будуй разом з нами.</h2>
-          <p>РУХ — відкритий проєкт. Код, ідеї, правки — усе вітається. Зірка, issue чи pull request — це теж дія.</p>
-        </div>
-
-        <div class="contrib__grid">
-          <div class="gh-links reveal">
-            <a class="gh-btn" href="https://github.com/audith0r/ruh-movement" target="_blank" rel="noopener">
-              <span class="gh-ic">★</span> Star репозиторій
-            </a>
-            <a class="gh-btn" href="https://github.com/audith0r/ruh-movement/issues" target="_blank" rel="noopener">
-              <span class="gh-ic">◇</span> Issues
-            </a>
-            <a class="gh-btn" href="https://github.com/audith0r/ruh-movement/pulls" target="_blank" rel="noopener">
-              <span class="gh-ic">⇡</span> Pull requests
-            </a>
-            <a class="gh-btn" href="https://github.com/audith0r/ruh-movement/fork" target="_blank" rel="noopener">
-              <span class="gh-ic">⑂</span> Fork
-            </a>
-          </div>
-
-          <!-- Formspree: заміни YOUR_FEEDBACK_FORM_ID (може бути той самий, що й вище) -->
-          <form class="feedback-form fs-form reveal" data-delay="1"
-                action="https://formspree.io/f/YOUR_FEEDBACK_FORM_ID" method="POST">
-            <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <input type="hidden" name="_subject" value="Фідбек — РУХ">
-            <div class="field">
-              <label for="fb-email">Пошта</label>
-              <input id="fb-email" name="email" type="email" required placeholder="you@email.com">
-            </div>
-            <div class="field">
-              <label for="fb-msg">Фідбек / ідея</label>
-              <textarea id="fb-msg" name="message" rows="4" required placeholder="Що покращити, що додати, який баг помітив…"></textarea>
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn-build form-submit">
-                Надіслати фідбек <span class="arrow">→</span>
-              </button>
-              <p class="form-status" role="status" aria-live="polite"></p>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="foot">
@@ -1401,53 +1131,6 @@
     size();
     if (reduce) { frame(); stop(); } // draw a single static frame
   }
-
-  /* ====================================================
-     FORMSPREE FORMS — AJAX submit, no page reload
-     ==================================================== */
-  function setStatus(el, msg, kind) {
-    if (!el) return;
-    el.textContent = msg;
-    el.className = "form-status show " + kind;
-  }
-  document.querySelectorAll(".fs-form").forEach(function (form) {
-    var status = form.querySelector(".form-status");
-    var btn = form.querySelector("button[type=submit]");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      // honeypot tripped → silently ignore (bot)
-      var hp = form.querySelector(".hp");
-      if (hp && hp.value) return;
-      // not configured yet
-      if (form.action.indexOf("YOUR_") !== -1) {
-        setStatus(status, "Форму ще не під'єднано — встав свій Formspree ID у атрибут action форми.", "warn");
-        return;
-      }
-      var label = btn ? btn.innerHTML : "";
-      if (btn) { btn.disabled = true; btn.textContent = "Надсилаю…"; }
-      fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { Accept: "application/json" }
-      }).then(function (res) {
-        if (res.ok) {
-          form.reset();
-          setStatus(status, "Готово ✓ Дякуємо! Ми отримали твоє повідомлення.", "ok");
-        } else {
-          return res.json().then(function (data) {
-            var m = (data && data.errors)
-              ? data.errors.map(function (x) { return x.message; }).join(", ")
-              : "Спробуй ще раз.";
-            throw new Error(m);
-          });
-        }
-      }).catch(function (err) {
-        setStatus(status, "Не вдалося надіслати: " + err.message, "err");
-      }).finally(function () {
-        if (btn) { btn.disabled = false; btn.innerHTML = label; }
-      });
-    });
-  });
 })();
 </script>
 </body>

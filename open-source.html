@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#FBFBF9" />
+<title>РУХ — Open Source</title>
+<meta name="description" content="РУХ — відкритий проєкт. Код, ідеї, правки — усе вітається. Зірка, issue чи pull request — це теж дія." />
+<style>
+  /* ============================================================
+     DESIGN TOKENS (shared with directions.html)
+     ============================================================ */
+  :root {
+    --bg:        #FBFBF9;
+    --surface:   #FFFFFF;
+    --ink:       #0A0A0B;
+    --ink-2:     #2B2B30;
+    --muted:     #74747C;
+    --hairline:  rgba(10,10,11,0.08);
+    --hairline-2:rgba(10,10,11,0.12);
+
+    --green:     #18E08C;
+    --purple:    #7C5CFF;
+    --pink:      #FF7CC6;
+
+    --green-soft: rgba(24,224,140,0.16);
+    --purple-soft:rgba(124,92,255,0.16);
+    --pink-soft:  rgba(255,124,198,0.16);
+
+    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+            Roboto, Helvetica, Arial, sans-serif;
+
+    --step--1: clamp(0.82rem, 0.78rem + 0.2vw, 0.92rem);
+    --step-0:  clamp(1rem, 0.95rem + 0.25vw, 1.13rem);
+    --step-1:  clamp(1.2rem, 1.05rem + 0.7vw, 1.6rem);
+    --step-3:  clamp(2.2rem, 1.6rem + 3vw, 4rem);
+
+    --gutter: clamp(1.25rem, 1rem + 3vw, 3.5rem);
+    --maxw: 1240px;
+    --r-md: 18px;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+  h1, h2, p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--green-soft); }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 0.55em;
+    font-size: var(--step--1); letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); font-weight: 500;
+  }
+  .eyebrow .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green);
+    animation: pulseDot 2.6s var(--ease-soft) infinite;
+  }
+  @keyframes pulseDot {
+    0%   { box-shadow: 0 0 0 0 rgba(24,224,140,0.45); }
+    70%  { box-shadow: 0 0 0 10px rgba(24,224,140,0); }
+    100% { box-shadow: 0 0 0 0 rgba(24,224,140,0); }
+  }
+  .grad-text {
+    background: linear-gradient(102deg, var(--purple) 0%, var(--pink) 45%, var(--green) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* ===================== NAV ===================== */
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: clamp(1rem, 0.8rem + 1vw, 1.6rem) var(--gutter);
+    transition: background 0.4s var(--ease-soft), border-color 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(251,251,249,0.72);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5em; }
+  .brand .glyph {
+    width: 22px; height: 22px; border-radius: 7px;
+    background: conic-gradient(from 140deg, var(--green), var(--purple), var(--pink), var(--green));
+    box-shadow: 0 4px 18px -6px rgba(124,92,255,0.5);
+  }
+  .nav-group { display: flex; align-items: center; gap: 1.4rem; }
+  .nav-link { font-size: var(--step--1); font-weight: 500; color: var(--muted); transition: color 0.25s; }
+  .nav-link:hover { color: var(--ink); }
+  .nav-cta {
+    font-size: var(--step--1); font-weight: 500;
+    padding: 0.6em 1.15em;
+    border: 1px solid var(--hairline-2); border-radius: 999px;
+    transition: border-color 0.3s, transform 0.3s var(--ease);
+  }
+  .nav-cta:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  /* ===================== PAGE ===================== */
+  main {
+    flex: 1;
+    position: relative;
+    padding-block: clamp(8rem, 6rem + 6vw, 11rem) clamp(5rem, 4rem + 5vw, 8rem);
+    overflow: hidden;
+  }
+  .page-bg {
+    position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(50% 45% at 90% 0%, var(--purple-soft), transparent 60%),
+      radial-gradient(50% 45% at 5% 35%, var(--green-soft), transparent 60%);
+    opacity: 0.9;
+  }
+  .page-head {
+    display: flex; flex-direction: column; gap: 1.1rem;
+    max-width: 56ch; margin-bottom: clamp(3rem, 2rem + 4vw, 4.5rem);
+  }
+  .page-head h1 {
+    font-size: var(--step-3); line-height: 1.04;
+    letter-spacing: -0.025em; font-weight: 650;
+  }
+  .page-head p { color: var(--muted); font-size: var(--step-1); line-height: 1.45; }
+
+  /* ===================== CONTRIB GRID ===================== */
+  .contrib__grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: clamp(2rem, 1.5rem + 3vw, 4rem);
+    align-items: start;
+  }
+  @media (min-width: 860px) { .contrib__grid { grid-template-columns: 0.9fr 1.1fr; } }
+
+  .gh-links { display: grid; gap: 0.8rem; }
+  .gh-btn {
+    display: flex; align-items: center; gap: 0.8em;
+    padding: 1.05em 1.3em;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    font-weight: 500;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .gh-btn .gh-ic { color: var(--purple); font-size: 1.05em; width: 1.2em; text-align: center; }
+  .gh-btn:hover { border-color: var(--hairline-2); transform: translateY(-2px); box-shadow: 0 20px 40px -30px rgba(10,10,11,0.5); }
+
+  /* ===================== FORM ===================== */
+  .field { display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+  .field label {
+    font-size: var(--step--1); letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted); font-weight: 500;
+  }
+  .field input, .field textarea {
+    font: inherit; color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--hairline-2); border-radius: 14px;
+    padding: 0.85em 1em; width: 100%;
+    -webkit-appearance: none; appearance: none;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .field textarea { resize: vertical; min-height: 110px; }
+  .field input::placeholder, .field textarea::placeholder { color: #A7A7AD; }
+  .field input:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--purple);
+    box-shadow: 0 0 0 4px var(--purple-soft);
+  }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+  .feedback-form { display: grid; gap: 1.2rem; }
+
+  .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+  .btn-build {
+    display: inline-flex; align-items: center; gap: 0.7em;
+    padding: 0.95em 1.7em; border-radius: 999px; border: 0;
+    font: inherit; font-weight: 600; font-size: var(--step-0);
+    color: var(--ink);
+    background: linear-gradient(100deg, var(--green), #6BE0B0);
+    cursor: pointer;
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    box-shadow: 0 18px 40px -18px rgba(24,224,140,0.6);
+  }
+  .btn-build .arrow { transition: transform 0.4s var(--ease); }
+  .btn-build:hover { transform: translateY(-2px); box-shadow: 0 24px 50px -18px rgba(24,224,140,0.7); }
+  .btn-build:hover .arrow { transform: translateX(5px); }
+  .btn-build[disabled] { opacity: 0.6; cursor: progress; }
+
+  .form-status {
+    margin: 0; font-size: var(--step--1);
+    opacity: 0; transform: translateY(4px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .form-status.show { opacity: 1; transform: none; }
+  .form-status.ok   { color: #0FAE6B; }
+  .form-status.err  { color: #E0464B; }
+
+  /* ===================== FOOTER ===================== */
+  footer.foot {
+    border-top: 1px solid var(--hairline);
+    padding: 2.5rem var(--gutter);
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 1rem;
+    color: var(--muted); font-size: var(--step--1);
+  }
+  footer.foot .brand { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <a href="index.html" class="brand" title="На головну"><span class="glyph" aria-hidden="true"></span>РУХ</a>
+    <div class="nav-group">
+      <a class="nav-link" href="directions.html">Напрямки</a>
+      <a class="nav-cta" href="join.html">Подати заявку</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-bg" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <div class="page-head">
+        <span class="eyebrow"><span class="dot"></span>Open-source</span>
+        <h1>Будуй <span class="grad-text">разом з нами</span>.</h1>
+        <p>РУХ — відкритий проєкт. Код, ідеї, правки — усе вітається. Зірка, issue чи pull request — це теж дія.</p>
+      </div>
+
+      <div class="contrib__grid">
+        <div class="gh-links">
+          <a class="gh-btn" href="https://github.com/audith0r/ruh-movement" target="_blank" rel="noopener">
+            <span class="gh-ic">★</span> Star репозиторій
+          </a>
+          <a class="gh-btn" href="https://github.com/audith0r/ruh-movement/issues" target="_blank" rel="noopener">
+            <span class="gh-ic">◇</span> Issues
+          </a>
+          <a class="gh-btn" href="https://github.com/audith0r/ruh-movement/pulls" target="_blank" rel="noopener">
+            <span class="gh-ic">⇡</span> Pull requests
+          </a>
+          <a class="gh-btn" href="https://github.com/audith0r/ruh-movement/fork" target="_blank" rel="noopener">
+            <span class="gh-ic">⑂</span> Fork
+          </a>
+        </div>
+
+        <form class="feedback-form" action="https://formspree.io/f/xgobzwqk" method="POST">
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="_subject" value="Фідбек — РУХ">
+          <div class="field">
+            <label for="fb-email">Пошта</label>
+            <input id="fb-email" name="email" type="email" required placeholder="you@email.com">
+          </div>
+          <div class="field">
+            <label for="fb-msg">Фідбек / ідея</label>
+            <textarea id="fb-msg" name="message" rows="4" required placeholder="Що покращити, що додати, який баг помітив…"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-build">
+              Надіслати фідбек <span class="arrow">→</span>
+            </button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <span class="brand"><span class="glyph" aria-hidden="true"></span>РУХ — ruh-movement</span>
+    <span>Action over talk · © <span id="year"></span></span>
+  </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------- nav background on scroll ---------- */
+  var nav = document.getElementById("nav");
+  var onScrollNav = function () {
+    if (window.scrollY > 24) nav.classList.add("scrolled");
+    else nav.classList.remove("scrolled");
+  };
+  onScrollNav();
+  window.addEventListener("scroll", onScrollNav, { passive: true });
+
+  /* ---------- Formspree AJAX submit ---------- */
+  var form = document.querySelector(".feedback-form");
+  var status = form.querySelector(".form-status");
+  var btn = form.querySelector("button[type=submit]");
+  function setStatus(msg, kind) {
+    status.textContent = msg;
+    status.className = "form-status show " + kind;
+  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var hp = form.querySelector(".hp");
+    if (hp && hp.value) return; // bot
+    var label = btn.innerHTML;
+    btn.disabled = true; btn.textContent = "Надсилаю…";
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    }).then(function (res) {
+      if (res.ok) {
+        form.reset();
+        setStatus("Готово ✓ Дякуємо за фідбек!", "ok");
+      } else {
+        return res.json().then(function (data) {
+          var m = (data && data.errors)
+            ? data.errors.map(function (x) { return x.message; }).join(", ")
+            : "Спробуй ще раз.";
+          throw new Error(m);
+        });
+      }
+    }).catch(function (err) {
+      setStatus("Не вдалося надіслати: " + err.message, "err");
+    }).finally(function () {
+      btn.disabled = false; btn.innerHTML = label;
+    });
+  });
+})();
+</script>
+</body>
+</html>
