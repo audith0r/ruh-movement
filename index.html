@@ -650,6 +650,33 @@ footer p {
   #s-enter { padding: 60px 24px; }
   .enter-btn { padding: 18px 36px; font-size: 15px; }
 }
+
+/* ─── SECTION LINK → directions.html ──────────────────────── */
+.build-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 15px 30px;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 100px;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+.build-explore span {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+.build-explore:hover {
+  border-color: var(--purple);
+  background: rgba(124,58,237,0.04);
+  transform: translateY(-2px);
+}
+.build-explore:hover span { transform: translateX(6px); }
 </style>
 </head>
 <body>
@@ -663,6 +690,7 @@ footer p {
   <ul class="nav-links">
     <li><a href="#s-core">Суть</a></li>
     <li><a href="#s-build">Проєкти</a></li>
+    <li><a href="directions.html">Напрямки</a></li>
     <li><a href="#s-enter">Увійти</a></li>
   </ul>
   <a href="#s-enter" class="nav-cta">Увійти в орбіту</a>
@@ -828,6 +856,10 @@ footer p {
       <div class="bcard-desc">Мистецтво, музика, дизайн, архітектура думки. Речі, які існують, бо хтось захотів їх зробити.</div>
     </div>
   </div>
+
+  <a href="directions.html" class="build-explore rv d2">
+    Дослідити всі напрямки <span>→</span>
+  </a>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════
